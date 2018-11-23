@@ -72,9 +72,9 @@ def FindMatchedCodeIndexInList(values, code):
 def ChangeCellValue(sheet, row, col, value):
     sheet.write(row, col, value)
 
-def FindAndInsert(fp1, isColumn1, codeidx1, numidx1, fp2, isColumn2, codeidx2, numidx2):
-    sheetRD = GetRdSheet(fp1, 0)
-    wb, sheetWT, sheetWR = GetWtSheet(fp2, 0)
+def FindAndInsert(fp1, sheetIdx1, isColumn1, codeidx1, numidx1, fp2, sheetIdx2, isColumn2, codeidx2, numidx2, resultName):
+    sheetRD = GetRdSheet(fp1, sheetIdx1)
+    wb, sheetWT, sheetWR = GetWtSheet(fp2, sheetIdx2)
     if isColumn1:
         codesRD = sheetRD.col_values(codeidx1)
         numsRD = sheetRD.col_values(numidx1)
@@ -87,9 +87,9 @@ def FindAndInsert(fp1, isColumn1, codeidx1, numidx1, fp2, isColumn2, codeidx2, n
     else:
         codesWT = sheetWR.row_values(codeidx2)
 
-    print('codesRD:{}'.format(codesRD))
-    print('numsRD:{}'.format(numsRD))
-    print('codesWT:{}'.format(codesWT))
+    # print('codesRD:{}'.format(codesRD))
+    # print('numsRD:{}'.format(numsRD))
+    # print('codesWT:{}'.format(codesWT))
 
     i = -1
     for item in codesRD:
@@ -103,9 +103,12 @@ def FindAndInsert(fp1, isColumn1, codeidx1, numidx1, fp2, isColumn2, codeidx2, n
                 else:
                     ChangeCellValue(sheetWT, numidx2, index, numsRD[i])
             except:
-                continue
-                
-    wb.save(QFileInfo(fp2).absoluteDir().path() + '/result.xls')
+                continue    
+    wb.save(resultName)
+
+def GetSheets(filePath):
+    rb = xlrd.open_workbook(filePath)
+    return rb.sheet_names()
 
 if __name__ == '__main__':
     print(GetValue('A'))

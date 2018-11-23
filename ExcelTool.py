@@ -5,6 +5,9 @@ import MatchAndInsert
 
 app = QApplication([])
 win = QWidget()
+f = win.font()
+f.setPointSize(12)
+win.setFont(f)
 
 panel_1 = MatchAndInsert.MatchAndInsertPanel(parent = win)
 panel_1.resize(730, 400)
