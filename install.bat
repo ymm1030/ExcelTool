@@ -1,0 +1,1 @@
+python -m pip install pyqt5 xlrd xlwt xlutils
