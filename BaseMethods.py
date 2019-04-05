@@ -23,10 +23,19 @@ def GetDistance(text1, text2):
 
 def IsNumber(value):
     try:
-        value + 1
+        float(value)
         return True
-    except:
-        return False
+    except ValueError:
+        pass
+ 
+    try:
+        import unicodedata
+        unicodedata.numeric(value)
+        return True
+    except (TypeError, ValueError):
+        pass
+ 
+    return False
 
 def GetRdSheet(filePath, sheetIndex):
     try:
